@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8">
+<Project DefaultTargets="Update" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <Import Project="C:\Program Files (x86)\GeneXus\GeneXus16\Genexus.Tasks.targets" />
+    <Import Project="C:\Program Files (x86)\GeneXus\GeneXus16\Genexus.Server.Tasks.targets" />
+
+    <Target Name="OpenKnowledgeBase">
+        <OpenKnowledgeBase Directory="$(KBPath)" />
+    </Target>
+
+    <Target Name="Update" DependsOnTargets="OpenKnowledgeBase">
+        <UpdateFromServer
+            Preview="false"
+            UpdateKbProperties="false"
+            ServerUsername="local\consolidado"
+            ServerPassword="consolidado123"
+        />
+        <CloseKnowledgeBase />
+    </Target>
+
+</Project>
