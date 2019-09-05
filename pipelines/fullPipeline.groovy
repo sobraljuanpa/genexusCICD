@@ -13,7 +13,11 @@ node {
             kbVersion: '',
             localKbPath: '',
             localKbVersion: '',
-            serverURL: 'https://sandbox.genexusserver.com/v15'])
+            serverURL: 'http://172.40.11.254/genexusserverbeta'])
+    }
+
+    stage('BuildAll and run unit tests') {
+        bat script: 'MSBuild.exe C:\\scripts\\runUnitTests.msbuild /p:KBPath=C:\\Models\\GxTestSample16;GXServerUser=local\\admin;GXServerPass=admin123;JUnitTestFilePath=C:\\results'
     }
 
 }
