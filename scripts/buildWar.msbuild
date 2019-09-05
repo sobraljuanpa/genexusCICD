@@ -4,6 +4,7 @@
     <Import Project="C:\Program Files (x86)\GeneXus\GeneXusBeta\Genexus.Tasks.targets" />
     <Import Project="C:\Program Files (x86)\GeneXus\GeneXusBeta\Genexus.Server.Tasks.targets" />
     <Import Project="C:\Program Files (x86)\GeneXus\GeneXusBeta\Imports.targets" />
+    <Import Project="C:\Program Files (x86)\GeneXus\GeneXusBeta\MSBuild.Community.Tasks.Targets" />
 
     <Target Name="OpenKnowledgeBase">
         <OpenKnowledgeBase Directory="$(KBPath)" />
