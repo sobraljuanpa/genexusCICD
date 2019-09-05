@@ -7,7 +7,7 @@ node {
     }
     
     stage('Move scripts to local scripts folder') {
-        powershell label: '', script: 'Move-Item -Path .\\scripts\\* -Destination C:\\scripts\\'
+        powershell label: '', script: 'Copy-Item -Path .\\scripts\\* -Destination C:\\scripts\\'
     }
     
 }
