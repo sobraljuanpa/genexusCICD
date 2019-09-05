@@ -2,7 +2,7 @@
 <Project DefaultTargets="RunUnitTests" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
     <Import Project="C:\Program Files (x86)\GeneXus\GeneXusBeta\Genexus.Tasks.targets" />
-    <Import Project="C:\Program Files (x86)\GeneXus\GeneXus16\Genexus.Server.Tasks.targets" />
+    <Import Project="C:\Program Files (x86)\GeneXus\GeneXusBeta\Genexus.Server.Tasks.targets" />
     <Import Project="C:\Program Files (x86)\GeneXus\GeneXusBeta\GXTest.targets"/>
 
     <Target Name="OpenKnowledgeBase">
