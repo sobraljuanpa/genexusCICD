@@ -14,7 +14,6 @@
     </Target>
 
     <Target Name="RunUnitTests" DependsOnTargets="BuildAll">
-        <SetActiveEnvironment EnvironmentName="Desa"/>
         <UpdateTestRefs Type="Unit" ServerUserName="$(GXServerUser)" ServerPassword="$(GXServerPass)"/>
         <BuildOne BuildCalled="true" ObjectName="Runner"/>
         <RunTests Type="Unit" DetailedResults="true" ServerUserName="$(GXServerUser)" ServerPassword="$(GXServerPass)"/>
