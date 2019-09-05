@@ -5,6 +5,7 @@
     <Import Project="C:\Program Files (x86)\GeneXus\GeneXusBeta\Genexus.Server.Tasks.targets" />
     <Import Project="C:\Program Files (x86)\GeneXus\GeneXusBeta\MSBuild.Community.Tasks.Targets" />
     <Import Project="C:\Program Files (x86)\GeneXus\GeneXusBeta\Deploy\Java\Genexus.Java.Server.targets" />
+    <Import Project="C:\Program Files (x86)\GeneXus\GeneXusBeta\Packages\Gxpm\Platforms\GeneXus.Java.Workflow.targets" />
 
     <Target Name="OpenKnowledgeBase">
         <OpenKnowledgeBase Directory="$(KBPath)" />
