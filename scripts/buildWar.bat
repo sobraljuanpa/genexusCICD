@@ -8,6 +8,6 @@ set ObjectNames=%5
 set ProjFullPath=%KBPath%\%DataDir%\web\%ProjectName%.gxdproj
 set OutputWar=%KBPath%\%DataDir%\Deploy\Local\%ProjectName%.war
 
-"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin\msbuild.exe" deploy.msbuild /p:ProjectName=%ProjectName%;KBPath=%KBPath%;ObjectNames=%ObjectNames%
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin\msbuild.exe" buildWar.msbuild /p:ProjectName=%ProjectName%;KBPath=%KBPath%;ObjectNames=%ObjectNames%
 
 "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin\msbuild.exe" %ProjFullPath% /p:AppName=%AppName%
