@@ -13,7 +13,7 @@
         <BuildAll />
     </Target>
 
-    <Target Name="RunUnitTests" DependsOnTargets="OpenKnowledgeBase">
+    <Target Name="RunUnitTests" DependsOnTargets="BuildAll">
         <SetActiveEnvironment EnvironmentName="Desa"/>
         <UpdateTestRefs Type="Unit" ServerUserName="$(GXServerUser)" ServerPassword="$(GXServerPass)"/>
         <BuildOne BuildCalled="true" ObjectName="Runner"/>
