@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="GenerateArtifacts" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <Import Project="C:\Program Files (x86)\GeneXus\GeneXusBeta\Genexus.Tasks.targets" />
+    <Import Project="C:\Program Files (x86)\GeneXus\GeneXusBeta\Genexus.Server.Tasks.targets" />
+
+    <Target Name="OpenKnowledgeBase">
+        <OpenKnowledgeBase Directory="$(KBPath)" />
+    </Target>
+
+    <Target Name="BuildAll" DependsOnTargets="OpenKnowledgeBase">
+        <BuildAll />
+    </Target>
+
+    <Target Name="BuildArtifacts" DependsOnTargets="BuildAll">
+        <BuildArtifacts/>
+    </Target>
+
+</Project>
