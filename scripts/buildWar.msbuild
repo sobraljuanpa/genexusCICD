@@ -1,22 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="BuildArtifacts" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="CreateDeploy" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-    <Import Project="C:\Program Files (x86)\GeneXus\GeneXusBeta\Genexus.Tasks.targets" />
-    <Import Project="C:\Program Files (x86)\GeneXus\GeneXusBeta\Genexus.Server.Tasks.targets" />
-    <Import Project="C:\Program Files (x86)\GeneXus\GeneXusBeta\MSBuild.Community.Tasks.Targets" />
-    <Import Project="C:\Program Files (x86)\GeneXus\GeneXusBeta\Deploy\Java\Genexus.Java.Server.targets" />
-    <Import Project="C:\Program Files (x86)\GeneXus\GeneXusBeta\Packages\Gxpm\Platforms\GeneXus.Java.Workflow.targets" />
+	<PropertyGroup>
+		<GX_PROGRAM_DIR Condition=" '$(GX_PROGRAM_DIR)' == '' ">$(MSBuildProjectDirectory)</GX_PROGRAM_DIR>
+	</PropertyGroup>
 
-    <Target Name="OpenKnowledgeBase">
-        <OpenKnowledgeBase Directory="$(KBPath)" />
-    </Target>
+	<Import Project="$(GX_PROGRAM_DIR)\Imports.targets"/>
 
-    <Target Name="BuildAll" DependsOnTargets="OpenKnowledgeBase">
-        <BuildAll />
-    </Target>
+	<PropertyGroup>
+		<!--Input Parameters-->
 
-    <Target Name="BuildArtifacts" DependsOnTargets="BuildAll">
-        <BuildArtifacts/>
-    </Target>
+		<!-- Working KB Properties -->
+		<KBPath></KBPath>
+		<KBVersion></KBVersion>
+		<KBEnvironment></KBEnvironment>
 
+		<!-- Deploy Project Properties -->
+		<ProjectName></ProjectName>
+		<DeployPath></DeployPath>
+		<ObjectNames></ObjectNames>
+		<ProjectFile></ProjectFile>
+
+	</PropertyGroup>
+
+	<Target Name="SelectVersion" Condition="'$(KBVersion)'!=''" >
+		<SetActiveVersion VersionName="$(KBVersion)"  />
+	</Target>
+
+	<Target Name="SelectEnvironment" Condition="'$(KBEnvironment)'!=''">
+		<SetActiveEnvironment EnvironmentName="$(KBEnvironment)" />
+	</Target>
+
+	<Target Name="OpenKB">
+		<Error Condition="'$(KBPath)'==''" Text="KBPath cannot be null" />
+		<Message Text="OpenKnowledgeBase Directory=$(KBPath)" />
+		<OpenKnowledgeBase Directory="$(KBPath)"/>
+	</Target>
+
+	<Target Name="Open" DependsOnTargets="OpenKB;SelectVersion;SelectEnvironment"/>
+
+	<Target Name="CreateDeploy" DependsOnTargets="Open" >
+
+		<PropertyGroup Condition="$(KBPath.EndsWith('\'))">
+			<KBPath>$(KBPath.Substring(0, $([MSBuild]::Subtract($(KBPath.Length), 1))))</KBPath>
+		</PropertyGroup>
+		
+		<PropertyGroup Condition="'$(KBVersion)' == ''">
+			<KBVersion>$(KBPath.Substring($([MSBuild]::Add($(KBPath.LastIndexOf('\')), 1))))</KBVersion>
+		</PropertyGroup>
+
+		<Message Text="KBPath is $(KBPath)"/>
+		<Message Text="KBVersion is $(KBVersion)"/>
+		
+		<ItemGroup>
+			<DeployProperty Include="ApplicationKey">
+				<PropertyValue>$(APPLICATION_KEY)</PropertyValue>
+			</DeployProperty>
+			<DeployProperty Include="SiteKey">
+				<PropertyValue>$(SITE_KEY)</PropertyValue>
+			</DeployProperty>
+			<DeployProperty Include="TargetJRE">
+				<PropertyValue>$(TARGET_JRE)</PropertyValue>
+			</DeployProperty>
+			<DeployProperty Include="DeployTargetTask">
+				<PropertyValue>$(DEPLOY_TARGETS)</PropertyValue>
+			</DeployProperty>
+			<DeployProperty Include="PackageFormat">
+				<PropertyValue>$(PACKAGE_FORMAT)</PropertyValue>
+			</DeployProperty>
+			<DeployProperty Include="TimeStamp">
+				<PropertyValue>$(TimeStamp)</PropertyValue>
+			</DeployProperty>
+			<DeployProperty Include="DeploymentUnit">
+				<PropertyValue>$(DeploymentUnit)</PropertyValue>
+			</DeployProperty>
+			<DeployProperty Include="DeployTarget">
+				<PropertyValue>$(TargetId)</PropertyValue>
+			</DeployProperty>
+			<DeployProperty Include="ApplicationServer">
+				<PropertyValue>$(ApplicationServer)</PropertyValue>
+			</DeployProperty>
+			<DeployProperty Include="AppName">
+				<PropertyValue>$(AppName)</PropertyValue>
+			</DeployProperty>
+			<DeployProperty Include="KBPath">
+				<PropertyValue>$(KBPath)</PropertyValue>
+			</DeployProperty>
+			<DeployProperty Include="RestSpecFolder">
+				<PropertyValue>$(KBPath)\GXRESTSPC\$(KBVersion)</PropertyValue>
+			</DeployProperty>
+		</ItemGroup>
+
+		<CreateDeployProject ProjectName="$(ProjectName)" ObjectNames="$(ObjectNames)" AdditionalProperies="@(DeployProperty)" SelectedObjectsOnly="$(SelectedObjectsOnly)" >
+			<Output TaskParameter="ProjectFile" PropertyName="ProjectFile"/>
+		</CreateDeployProject>
+
+		<Message Text="Deploy Project created at '$(ProjectFile)'" Condition="'$(ProjectFile)' != '' AND Exists('$(ProjectFile)')"/>
+	</Target>
 </Project>
