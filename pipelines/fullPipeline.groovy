@@ -20,8 +20,8 @@ node {
         bat script: 'MSBuild.exe C:\\scripts\\runUnitTests.msbuild /p:KBPath=C:\\Models\\GxTestSample16;GXServerUser=local\\admin;GXServerPass=admin123;JUnitTestFilePath=C:\\results'
     }
 
-    stage('Build Artifact') {
-        bat script:'C:\\scripts\\buildWar.bat C:\\Models\\GXTestSample16 JavaModel SampleApp SampleApp BuiltSampleApp'
+    stage('Build Artifact') { // The last parameter must be the name of the main object in the KB
+        bat script:'C:\\scripts\\buildWar.bat C:\\Models\\GXTestSample16 JavaModel SampleApp SampleApp Home'
     }
 
 }
