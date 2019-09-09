@@ -1,0 +1,18 @@
+<Project DefaultTargets="ReviewObjects" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    
+    <Import Project="C:\Program Files (x86)\GeneXus\GeneXusBeta\Genexus.Tasks.targets" />
+    <Import Project="C:\Program Files (x86)\GeneXus\GeneXusBeta\Packages\KBDoctorCmd.Tasks.targets"/>
+    
+    <Target  Name="ReviewObjects"> 
+        <OpenKnowledgeBase Directory="$(KBPath)" />
+        <ReviewObjectsCmd  DateFrom="$(DateFrom)" />
+        <CloseKnowledgeBase />
+    </Target>
+
+    <Target  Name="ReviewCommits">
+        <OpenKnowledgeBase Directory="$(KBPath)" />
+        <ReviewCommitCmd  DateFrom="$(DateFrom)" DateTo="$(DateTo)" ServerUser="$(ServerUser)" ServerPassword="$(ServerPassword)"/> 
+        <CloseKnowledgeBase />
+    </Target>
+
+</Project>
