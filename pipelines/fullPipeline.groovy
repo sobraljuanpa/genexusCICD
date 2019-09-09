@@ -13,7 +13,7 @@ node {
             kbVersion: '',
             localKbPath: '',
             localKbVersion: '',
-            serverURL: 'http://172.40.11.254/genexusserverbeta'])
+            serverURL: 'http://172.40.11.254/genexusserverbeta_2'])
     }
 
     stage('BuildAll and run unit tests') {
