@@ -1,5 +1,7 @@
 node {
 
+    properties([pipelineTriggers([pollSCM('* * * * *')])])
+
     stage('Update KB') {
         checkout(
             [$class: 'GeneXusServerSCM',
@@ -26,6 +28,14 @@ node {
 
     stage('Build Artifact') { // The last parameter must be the name of the main object in the KB
         bat script:'C:\\scripts\\buildWar.bat C:\\Models\\GXTestSample16 JavaModel SampleApp SampleApp Home'
+    }
+
+    stage('Deploy Artifact') {
+
+    }
+
+    stage('Run UI Tests') {
+        bat script:'MSBuild.exe C:\\scripts\\runUITests.msbuild /p:KBPath=C:\\Models\\GxTestSample16;GXServerUser=local\\admin;GXServerPass=admin123;JUnitTestFilePath=C:\\results'
     }
 
 }
