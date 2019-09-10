@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="RunUITests" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <Import Project="C:\Program Files (x86)\GeneXus\GeneXusBeta\Genexus.Tasks.targets" />
+    <Import Project="C:\Program Files (x86)\GeneXus\GeneXusBeta\Genexus.Server.Tasks.targets" />
+    <Import Project="C:\Program Files (x86)\GeneXus\GeneXusBeta\GXTest.targets"/>
+
+    <Target Name="OpenKnowledgeBase">
+        <OpenKnowledgeBase Directory="$(KBPath)" />
+    </Target>
+
+    <Target Name="BuildAll" DependsOnTargets="OpenKnowledgeBase">
+        <BuildAll />
+    </Target>
+
+    <Target Name="RunUITests" DependsOnTargets="BuildAll">
+        <UpdateTestRefs Type="UI" ServerUserName="$(GXServerUser)" ServerPassword="$(GXServerPass)"/>
+        <BuildOne BuildCalled="true" ObjectName="Runner"/>
+        <RunTests Type="UI" DetailedResults="true" ServerUserName="$(GXServerUser)" ServerPassword="$(GXServerPass)"/>
+        <JUnitExportTests JUnitTestFilePath="$(JUnitTestFilePath)" ServerUserName="$(GXServerUser)" ServerPassword="$(GXServerPass)">
+            <Output TaskParameter="JUnitTestFilePath" PropertyName="JUnitTestFilePathOutput" />
+        </JUnitExportTests>
+        <CloseKnowledgeBase />
+    </Target>
+
+</Project>
