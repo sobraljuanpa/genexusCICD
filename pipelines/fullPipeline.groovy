@@ -1,21 +1,5 @@
 node {
 
-    properties([pipelineTriggers([pollSCM('* * * * *')])])
-
-    checkout(
-            [$class: 'GeneXusServerSCM',
-            credentialsId: 'GXServerCredentials',
-            gxInstallationId: 'genexus',
-            kbDbCredentialsId: '',
-            kbDbInSameFolder: true,
-            kbDbName: '',
-            kbDbServerInstance: '',
-            kbName: 'GXTestSample16',
-            kbVersion: '',
-            localKbPath: '',
-            localKbVersion: '',
-            serverURL: 'http://172.40.11.254/genexusserverbeta_2'])
-
     stage('Analize code quality') {
         bat script: 'MSBuild.exe C:\\scripts\\analizeCode.msbuild /t:ReviewObjects /p:KBPath=C:\\Models\\GXTestSample16 > C:\\results\\KBDoctorAnalysis.txt'
     }
