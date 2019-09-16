@@ -13,11 +13,23 @@ node {
     }
 
     stage('Deploy Artifact') {
-
+        powershell label: '', script: 'Stop-Service -Name "Apache Tomcat 8.5 Tomcat8"'
+        powershell label: '', script: 'Remove-Item -Recurse -Force "C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\SampleApp"'
+        powershell label: '', script: 'Remove-Item -Path "C:\\Program Files \\Apache Software Foundation\\Tomcat 8.5\\webapps\\SampleApp.war"'
+	    powershell label: '', script: "Copy-Item -Path 'C:\\Models\\GXTestSample16\\JavaModel\\Deploy\\Local\\SampleApp.war' -Destination 'C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps'"
+	    powershell label: '', script: 'Stop-Service -Name "Apache Tomcat 8.5 Tomcat8"'
     }
 
     stage('Run UI Tests') {
-        bat script:'MSBuild.exe C:\\scripts\\runUITests.msbuild /p:KBPath=C:\\Models\\GxTestSample16;GXServerUser=local\\admin;GXServerPass=admin123;JUnitTestFilePath=C:\\results'
+    //    bat script:'MSBuild.exe C:\\scripts\\runUITests.msbuild /p:KBPath=C:\\Models\\GxTestSample16;GXServerUser=local\\admin;GXServerPass=admin123;JUnitTestFilePath=C:\\results'
+    }
+    
+    stage('Copy test results to workspace'){
+        powershell label: '', script: 'Copy-Item -Path \'C:\\results\\*.xml\' -Destination $WORKSPACE'
+    }
+
+    stage('Generate Test report'){
+        junit '*.xml'
     }
 
 }
