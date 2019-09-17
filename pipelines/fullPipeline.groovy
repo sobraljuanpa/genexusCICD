@@ -13,11 +13,13 @@ node {
     }
 
     stage('Deploy Artifact') {
-        powershell label: '', script: 'Stop-Service -Name "Apache Tomcat 8.5 Tomcat8"'
-        powershell label: '', script: 'Remove-Item -Recurse -Force "C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\SampleApp"'
-        powershell label: '', script: 'Remove-Item -Path "C:\\Program Files \\Apache Software Foundation\\Tomcat 8.5\\webapps\\SampleApp.war"'
-	    powershell label: '', script: "Copy-Item -Path 'C:\\Models\\GXTestSample16\\JavaModel\\Deploy\\Local\\SampleApp.war' -Destination 'C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps'"
-	    powershell label: '', script: 'Stop-Service -Name "Apache Tomcat 8.5 Tomcat8"'
+        powershell lable: '', script: '''
+        Stop-Service -Name "Apache Tomcat 8.5 Tomcat8"
+        Remove-Item -Recurse -Force "C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\SampleApp"
+        Remove-Item -Path "C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps\\SampleApp.war"
+        Copy-Item -Path "C:\\Models\\GXTestSample16\\JavaModel\\Deploy\\Local\\SampleApp.war" -Destination "C:\\Program Files\\Apache Software Foundation\\Tomcat 8.5\\webapps"
+        Start-Service -Name "Apache Tomcat 8.5 Tomcat8"
+        '''
     }
 
     stage('Run UI Tests') {
