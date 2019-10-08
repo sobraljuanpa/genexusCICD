@@ -52,7 +52,7 @@ node {
         }
 
         stage('Notify via email'){
-            emailext attachmentsPattern: '*.txt', body: 'Job ${JOB_NAME} build ${BUILD_NUMBER}\n More info at: ${BUILD_URL}', subject: 'Commit ${CHANGES_SINCE_LAST_BUILD}', to: 'juan.sobral@abstracta.com.uy'
+            emailext attachLog: true, attachmentsPattern: '*.txt', body: 'Job ${JOB_NAME} build ${BUILD_NUMBER}\n More info at: ${BUILD_URL}', subject: '${PROJECT_NAME} - Build # ${BUILD_NUMBER} - ${BUILD_STATUS}', to: 'juan.sobral@abstracta.com.uy'
         }
 
     }
