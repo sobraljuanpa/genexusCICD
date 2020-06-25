@@ -18,7 +18,7 @@
         <BuildOne BuildCalled="true" ObjectName="Runner"/>
         <RunTests Type="UI" DetailedResults="true" ServerUserName="$(GXServerUser)" ServerPassword="$(GXServerPass)"/>
         <JUnitExportTests JUnitTestFilePath="$(JUnitTestFilePath)" ServerUserName="$(GXServerUser)" ServerPassword="$(GXServerPass)">
-            <Output TaskParameter="JUnitTestFilePath" PropertyName="JUnitTestFilePathOutput" />
+            <Output TaskParameter="$(JUnitTestFilePath)" PropertyName="$(JUnitTestFilePathOutput)" />
         </JUnitExportTests>
         <CloseKnowledgeBase />
     </Target>
