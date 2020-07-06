@@ -16,7 +16,7 @@
     <Target Name="RunUnitTests" DependsOnTargets="BuildAll">
         <UpdateTestRefs Type="Unit" ServerUserName="$(GXServerUser)" ServerPassword="$(GXServerPass)"/>
         <BuildOne BuildCalled="true" ObjectName="Runner"/>
-        <RunTests Type="Unit" DetailedResults="true" ServerUserName="$(GXServerUser)" ServerPassword="$(GXServerPass)"/>
+        <RunTests Type="Unit" ContinueOnError="ErrorAndContinue" DetailedResults="true" ServerUserName="$(GXServerUser)" ServerPassword="$(GXServerPass)"/>
         <JUnitExportTests JUnitTestFilePath="$(JUnitTestFilePath)" ServerUserName="$(GXServerUser)" ServerPassword="$(GXServerPass)">
             <Output TaskParameter="JUnitTestFilePath" PropertyName="JUnitTestFilePathOutput" />
         </JUnitExportTests>
